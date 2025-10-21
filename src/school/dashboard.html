@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="school-name">School</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">School Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="active">Overview</a>
+                    <a href="students.html">Student List</a>
+                    <a href="stats.html">Success Stats</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="settings.html">Settings</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <h2 style="margin-bottom: 1.5rem;">School Overview</h2>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <h3>Total Students</h3>
+                        <div class="value">64</div>
+                        <div class="subtext">Active students</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Acceptances</h3>
+                        <div class="value">22</div>
+                        <div class="subtext">This year</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Top Universities</h3>
+                        <div class="value">8</div>
+                        <div class="subtext">Ivy League & Top 50</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Messages</h3>
+                        <div class="value">12</div>
+                        <div class="subtext">Pending</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Accepted by Country</h3>
+                        <div class="chart-placeholder">Bar Chart: Acceptances by Country</div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Application Status</h3>
+                        <div class="chart-placeholder">Pie Chart: Application Status</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Students</h3>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" placeholder="Search..." class="form-input" style="width: 200px;">
+                            <button class="btn btn-outline">Filter</button>
+                        </div>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Counselor</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Aisha</td>
+                                    <td><span class="badge">In Progress</span></td>
+                                    <td>Ms. Khan</td>
+                                    <td>60%</td>
+                                </tr>
+                                <tr>
+                                    <td>Omar</td>
+                                    <td><span class="badge badge-success">Completed</span></td>
+                                    <td>Mr. Ali</td>
+                                    <td>100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Sara</td>
+                                    <td><span class="badge badge-success">Accepted</span></td>
+                                    <td>Ms. Khan</td>
+                                    <td>100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Ahmed</td>
+                                    <td><span class="badge badge-warning">Applied</span></td>
+                                    <td>Mr. Ali</td>
+                                    <td>85%</td>
+                                </tr>
+                                <tr>
+                                    <td>Fatima</td>
+                                    <td><span class="badge">In Progress</span></td>
+                                    <td>Ms. Khan</td>
+                                    <td>45%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

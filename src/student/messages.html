@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="user-name">Student</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Student Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="profile.html">My Profile</a>
+                    <a href="documents.html">Upload Documents</a>
+                    <a href="calendar.html">Test Dates</a>
+                    <a href="universities.html">University Shortlist</a>
+                    <a href="essays.html">Essays</a>
+                    <a href="messages.html" class="active">Messages</a>
+                    <a href="notifications.html">Notifications</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2>Messages</h2>
+                        <button class="btn btn-primary" onclick="openMessageModal()">Compose</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="card" style="padding: 1rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h4>From: Ms. Khan (Counselor)</h4>
+                                <span style="font-size: 0.8rem; color: var(--muted-fg);">2 hours ago</span>
+                            </div>
+                            <p style="color: var(--muted-fg); font-size: 0.9rem;">Your essay draft looks great! I've
+                                added some feedback. Please review and update.</p>
+                        </div>
+
+                        <div class="card" style="padding: 1rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h4>From: Admissions Office</h4>
+                                <span style="font-size: 0.8rem; color: var(--muted-fg);">1 day ago</span>
+                            </div>
+                            <p style="color: var(--muted-fg); font-size: 0.9rem;">Thank you for your application. We
+                                will review it and get back to you soon.</p>
+                        </div>
+
+                        <div class="card" style="padding: 1rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h4>To: Ms. Khan (Counselor)</h4>
+                                <span style="font-size: 0.8rem; color: var(--muted-fg);">3 days ago</span>
+                            </div>
+                            <p style="color: var(--muted-fg); font-size: 0.9rem;">Can we schedule a call to discuss my
+                                university shortlist?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeMessageModal()">&times;</span>
+                <h2>Compose Message</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="recipient">To</label>
+                    <select id="recipient" class="form-select">
+                        <option>Counselor (Ms. Khan)</option>
+                        <option>Admin</option>
+                        <option>Support</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="messageText">Message</label>
+                    <textarea id="messageText" class="form-textarea" placeholder="Write your message..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeMessageModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

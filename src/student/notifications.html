@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="user-name">Student</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Student Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="profile.html">My Profile</a>
+                    <a href="documents.html">Upload Documents</a>
+                    <a href="calendar.html">Test Dates</a>
+                    <a href="universities.html">University Shortlist</a>
+                    <a href="essays.html">Essays</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="notifications.html" class="active">Notifications</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <h2 style="margin-bottom: 1rem;">Notifications</h2>
+                <ul style="list-style: none; padding: 0;">
+                    <li
+                        style="padding: 1rem; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <strong>Your essay draft was reviewed</strong> by Counselor Ms. Khan.
+                        <div style="font-size: 0.8rem; color: var(--muted-fg); margin-top: 0.25rem;">2 hours ago</div>
+                    </li>
+                    <li
+                        style="padding: 1rem; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <strong>Reminder:</strong> SAT test scheduled on 3rd January.
+                        <div style="font-size: 0.8rem; color: var(--muted-fg); margin-top: 0.25rem;">1 day ago</div>
+                    </li>
+                    <li
+                        style="padding: 1rem; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <strong>Document approved:</strong> Your transcript has been verified.
+                        <div style="font-size: 0.8rem; color: var(--muted-fg); margin-top: 0.25rem;">2 days ago</div>
+                    </li>
+                    <li
+                        style="padding: 1rem; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <strong>New message</strong> from Ms. Khan (Counselor).
+                        <div style="font-size: 0.8rem; color: var(--muted-fg); margin-top: 0.25rem;">3 days ago</div>
+                    </li>
+                    <li
+                        style="padding: 1rem; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <strong>Application deadline approaching:</strong> University A application due in 15 days.
+                        <div style="font-size: 0.8rem; color: var(--muted-fg); margin-top: 0.25rem;">5 days ago</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="school-name">School</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">School Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Overview</a>
+                    <a href="students.html" class="active">Student List</a>
+                    <a href="stats.html">Success Stats</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="settings.html">Settings</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2>All Students</h2>
+                        <button class="btn btn-primary" onclick="addStudent()">+ Add Student</button>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="text" placeholder="Search by name..." class="form-input" style="flex: 1;">
+                        <select class="form-select" style="width: 150px;">
+                            <option>All Status</option>
+                            <option>In Progress</option>
+                            <option>Applied</option>
+                            <option>Accepted</option>
+                        </select>
+                        <select class="form-select" style="width: 150px;">
+                            <option>All Counselors</option>
+                            <option>Ms. Khan</option>
+                            <option>Mr. Ali</option>
+                        </select>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Counselor</th>
+                                    <th>Progress</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

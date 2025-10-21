@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Students - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span>Admin</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Admin Dashboard</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="students.html" class="active">Students</a>
+                    <a href="counselors.html">Counselors</a>
+                    <a href="schools.html">Schools</a>
+                    <a href="reports.html">CRM & Reports</a>
+                    <a href="notifications.html">Notifications</a>
+                    <a href="settings.html">Settings</a>
+                </nav>
+            </aside>
+
+            <div class="content-area" id="mainView">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2>All Students</h2>
+                        <button class="btn btn-primary">Export CSV</button>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="text" id="searchInput" placeholder="Search by name or email..." class="form-input"
+                            style="flex: 1;">
+                        <select class="form-select" style="width: 150px;">
+                            <option>All Countries</option>
+                            <option>Pakistan</option>
+                            <option>Saudi Arabia</option>
+                        </select>
+                        <select class="form-select" style="width: 150px;">
+                            <option>All Status</option>
+                            <option>In Progress</option>
+                            <option>Applied</option>
+                            <option>Accepted</option>
+                        </select>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Country</th>
+                                    <th>Status</th>
+                                    <th>Counselor</th>
+                                    <th>Progress</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area" id="detailView" style="display: none;">
+                <div style="margin-bottom: 1.5rem;">
+                    <button class="btn btn-secondary" onclick="showList()">← Back to List</button>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>Student: <span id="studentName"></span></h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-outline">Reassign Counselor</button>
+                        <button class="btn btn-primary">Send Notification</button>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Timeline</h3>
+                        <div style="font-size: 0.9rem; color: var(--muted-fg);">
+                            <p style="margin-bottom: 0.5rem;">• Account created</p>
+                            <p style="margin-bottom: 0.5rem;">• Documents uploaded</p>
+                            <p style="margin-bottom: 0.5rem;">• Essay draft submitted</p>
+                            <p style="margin-bottom: 0.5rem;">• Assigned to counselor</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Progress</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 72%;"></div>
+                        </div>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--muted-fg);">72% Complete</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Counselor Notes</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted-fg);">Strong STEM background; target UK and USA
+                            universities. Excellent SAT scores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Shortlist - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="user-name">Student</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Student Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="profile.html">My Profile</a>
+                    <a href="documents.html">Upload Documents</a>
+                    <a href="calendar.html">Test Dates</a>
+                    <a href="universities.html" class="active">University Shortlist</a>
+                    <a href="essays.html">Essays</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="notifications.html">Notifications</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <h2 style="margin-bottom: 1rem;">University Shortlist</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+                    <div class="card">
+                        <div
+                            style="width: 100%; height: 150px; background: var(--muted); border-radius: 6px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--muted-fg);">
+                            Campus Photo
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>University A</h3>
+                            <span class="badge">in-progress</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="width: 100%; height: 150px; background: var(--muted); border-radius: 6px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--muted-fg);">
+                            Campus Photo
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>University B</h3>
+                            <span class="badge badge-warning">applied</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="width: 100%; height: 150px; background: var(--muted); border-radius: 6px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--muted-fg);">
+                            Campus Photo
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>University C</h3>
+                            <span class="badge badge-success">accepted</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="width: 100%; height: 150px; background: var(--muted); border-radius: 6px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--muted-fg);">
+                            Campus Photo
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>University D</h3>
+                            <span class="badge">in-progress</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="addUniversity()">+ Add
+                    University</button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

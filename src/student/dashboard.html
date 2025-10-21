@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="user-name">Student</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Student Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="active">Dashboard</a>
+                    <a href="profile.html">My Profile</a>
+                    <a href="documents.html">Upload Documents</a>
+                    <a href="calendar.html">Test Dates</a>
+                    <a href="universities.html">University Shortlist</a>
+                    <a href="essays.html">Essays</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="notifications.html">Notifications</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <div class="card mb-4">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2 style="font-size: 1.2rem; margin-bottom: 0.25rem;">Welcome back, <span
+                                    id="welcome-name">Student</span>!</h2>
+                            <p style="font-size: 0.9rem; color: var(--muted-fg);">Here are your upcoming tasks and
+                                deadlines.</p>
+                        </div>
+                        <button class="btn btn-outline" onclick="openMessageModal()">Message Counselor</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <h3>Documents Uploaded</h3>
+                        <div class="value">6/10</div>
+                        <div class="subtext">Keep going!</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Essays Drafted</h3>
+                        <div class="value">2</div>
+                        <div class="subtext">1 reviewed</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Tests Scheduled</h3>
+                        <div class="value">2</div>
+                        <div class="subtext">SAT, IELTS</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Applications</h3>
+                        <div class="value">3</div>
+                        <div class="subtext">in progress</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Progress Tracker</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                    <span>Document Upload</span>
+                                    <span style="color: var(--muted-fg);">60%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                    <span>Essay Drafts</span>
+                                    <span style="color: var(--muted-fg);">40%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                    <span>Test Prep</span>
+                                    <span style="color: var(--muted-fg);">80%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                    <span>Applications</span>
+                                    <span style="color: var(--muted-fg);">30%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem; font-size: 0.95rem;">Calendar</h3>
+                        <div class="calendar-grid">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem;">Assigned Counselor</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 500; margin-bottom: 0.25rem;">Ms. Khan</div>
+                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Response time: ~2h</div>
+                        </div>
+                        <button class="btn btn-outline">View Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeMessageModal()">&times;</span>
+                <h2>Send message to Counselor</h2>
+            </div>
+            <div class="modal-body">
+                <textarea id="messageText" class="form-textarea" placeholder="Write your message..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeMessageModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in - EduCounsel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="student/dashboard.html">For Students</a>
+                <a href="school/dashboard.html">For Schools</a>
+                <a href="admin/dashboard.html">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-container">
+        <div class="card auth-card">
+            <h1>Log in</h1>
+
+            <div class="tabs">
+                <div class="tabs-list">
+                    <button class="tab-trigger active" data-tab="student">Student</button>
+                    <button class="tab-trigger" data-tab="school">School</button>
+                </div>
+
+                <div class="tab-content active" id="student">
+                    <form id="student-login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="email-student">Email</label>
+                            <input type="email" id="email-student" class="form-input" placeholder="you@example.com"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="pass-student">Password</label>
+                            <input type="password" id="pass-student" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
+                    </form>
+                </div>
+
+                <div class="tab-content" id="school">
+                    <form id="school-login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="email-school">School Email</label>
+                            <input type="email" id="email-school" class="form-input" placeholder="counselor@school.edu"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="pass-school">Password</label>
+                            <input type="password" id="pass-school" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
+                    </form>
+                </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--muted-fg); text-align: center; margin-top: 1rem;">
+                New here? <a href="signup.html" style="text-decoration: underline;">Create an account</a>
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>EduCounsel</h4>
+                <p>Guiding students across Pakistan and Saudi Arabia to top universities worldwide.</p>
+            </div>
+            <div class="footer-section">
+                <h5>Portals</h5>
+                <ul>
+                    <li><a href="student/dashboard.html">Student Portal</a></li>
+                    <li><a href="school/dashboard.html">School Portal</a></li>
+                    <li><a href="admin/dashboard.html">Admin Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Company</h5>
+                <ul>
+                    <li><a href="index.html#team">Our Counselors</a></li>
+                    <li><a href="index.html#faq">FAQ</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-copyright">
+            <p>&copy; 2025 EduCounsel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

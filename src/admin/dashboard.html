@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span>Admin</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Admin Dashboard</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="active">Dashboard</a>
+                    <a href="students.html">Students</a>
+                    <a href="counselors.html">Counselors</a>
+                    <a href="schools.html">Schools</a>
+                    <a href="reports.html">CRM & Reports</a>
+                    <a href="notifications.html">Notifications</a>
+                    <a href="settings.html">Settings</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <h2 style="margin-bottom: 1.5rem;">Admin Dashboard</h2>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <h3>Total Students</h3>
+                        <div class="value">312</div>
+                        <div class="subtext">All platforms</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>New Signups (7d)</h3>
+                        <div class="value">74</div>
+                        <div class="subtext">+12% from last week</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Counselor Activity</h3>
+                        <div class="value">High</div>
+                        <div class="subtext">8 active counselors</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Active Schools</h3>
+                        <div class="value">5</div>
+                        <div class="subtext">Partner institutions</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Signups This Week</h3>
+                        <div class="chart-placeholder">Bar Chart: Weekly Signups</div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Filters</h3>
+                        <div style="font-size: 0.9rem; color: var(--muted-fg);">
+                            <p style="margin-bottom: 0.5rem;">Date: Last 7 days</p>
+                            <p style="margin-bottom: 0.5rem;">Country: All</p>
+                            <p style="margin-bottom: 0.5rem;">Status: All</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem;">Students</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Country</th>
+                                    <th>Status</th>
+                                    <th>Counselor</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Aisha</td>
+                                    <td>aisha@example.com</td>
+                                    <td>Pakistan</td>
+                                    <td><span class="badge">In Progress</span></td>
+                                    <td>Ms. Khan</td>
+                                    <td><button class="btn btn-outline"
+                                            style="padding: 0.25rem 0.5rem; font-size: 0.85rem;">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Omar</td>
+                                    <td>omar@example.com</td>
+                                    <td>Saudi Arabia</td>
+                                    <td><span class="badge badge-success">Completed</span></td>
+                                    <td>Mr. Ali</td>
+                                    <td><button class="btn btn-outline"
+                                            style="padding: 0.25rem 0.5rem; font-size: 0.85rem;">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Sara</td>
+                                    <td>sara@example.com</td>
+                                    <td>Pakistan</td>
+                                    <td><span class="badge badge-success">Accepted</span></td>
+                                    <td>Ms. Khan</td>
+                                    <td><button class="btn btn-outline"
+                                            style="padding: 0.25rem 0.5rem; font-size: 0.85rem;">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Drag Students</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="studentDrag">
+                            <div class="badge" draggable="true" data-student="Aisha"
+                                style="cursor: move; padding: 0.5rem 1rem;">Aisha</div>
+                            <div class="badge" draggable="true" data-student="Omar"
+                                style="cursor: move; padding: 0.5rem 1rem;">Omar</div>
+                            <div class="badge" draggable="true" data-student="Sara"
+                                style="cursor: move; padding: 0.5rem 1rem;">Sara</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Drop on Counselors</h3>
+                        <div style="display: flex; gap: 1rem;">
+                            <div class="counselor-drop" data-counselor="Ms. Khan"
+                                style="flex: 1; min-height: 100px; border: 2px dashed var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; background: var(--muted);">
+                                Ms. Khan
+                            </div>
+                            <div class="counselor-drop" data-counselor="Mr. Ali"
+                                style="flex: 1; min-height: 100px; border: 2px dashed var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; background: var(--muted);">
+                                Mr. Ali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

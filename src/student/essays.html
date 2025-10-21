@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essays - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="user-name">Student</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Student Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="profile.html">My Profile</a>
+                    <a href="documents.html">Upload Documents</a>
+                    <a href="calendar.html">Test Dates</a>
+                    <a href="universities.html">University Shortlist</a>
+                    <a href="essays.html" class="active">Essays</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="notifications.html">Notifications</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <div class="space-y-4">
+                    <div class="card">
+                        <div
+                            style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
+                            <h3>Common App Personal Statement</h3>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Versions: 2</div>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <span class="badge badge-success">Reviewed</span>
+                                <button class="btn btn-outline">Upload New Version</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
+                            <h3>Why University A</h3>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Versions: 1</div>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <button class="btn btn-outline">Upload New Version</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
+                            <h3>Extracurricular Activities Essay</h3>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Versions: 3</div>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <span class="badge badge-success">Reviewed</span>
+                                <button class="btn btn-outline">Upload New Version</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="addNewEssay()">+ Add New Essay</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

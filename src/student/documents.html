@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Documents - EduCounsel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <span id="user-name">Student</span>
+                <a href="../index.html" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="sidebar-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">Student Portal</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="profile.html">My Profile</a>
+                    <a href="documents.html" class="active">Upload Documents</a>
+                    <a href="calendar.html">Test Dates</a>
+                    <a href="universities.html">University Shortlist</a>
+                    <a href="essays.html">Essays</a>
+                    <a href="messages.html">Messages</a>
+                    <a href="notifications.html">Notifications</a>
+                </nav>
+            </aside>
+
+            <div class="content-area">
+                <div class="card">
+                    <h2 style="margin-bottom: 1rem;">Upload Documents</h2>
+
+                    <div class="file-upload-zone" id="dropZone">
+                        <p>Drag and drop files here or click to browse</p>
+                        <input type="file" id="fileInput" multiple style="display: none;">
+                    </div>
+
+                    <div class="file-grid" id="fileGrid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

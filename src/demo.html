@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCounsel - Feature Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            padding: 1rem;
+            background: var(--muted);
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .feature-item:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .credential-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>EduCounsel</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="demo.html" class="active">Demo</a>
+                <a href="login.html" class="btn btn-ghost">Log in</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem 0;">
+        <h1 style="text-align: center; margin-bottom: 2rem;">EduCounsel Feature Demo</h1>
+
+        <div class="demo-section">
+            <h2 class="demo-title">🔐 Test Credentials</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                <div class="credential-box">
+                    <h4>👨‍🎓 Student Login</h4>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0;">
+                        <strong>Email:</strong> aisha@example.com<br>
+                        <strong>Password:</strong> password123
+                    </p>
+                    <a href="login.html" class="btn btn-primary" style="margin-top: 0.5rem; display: inline-block;">Try
+                        Student Portal</a>
+                </div>
+                <div class="credential-box">
+                    <h4>🏫 School Login</h4>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0;">
+                        <strong>Email:</strong> admin@kgs.edu.pk<br>
+                        <strong>Password:</strong> school123
+                    </p>
+                    <a href="login.html" class="btn btn-primary" style="margin-top: 0.5rem; display: inline-block;">Try
+                        School Portal</a>
+                </div>
+                <div class="credential-box">
+                    <h4>⚙️ Admin Login</h4>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0;">
+                        <strong>Email:</strong> admin@educounsel.com<br>
+                        <strong>Password:</strong> admin123
+                    </p>
+                    <a href="login.html" class="btn btn-primary" style="margin-top: 0.5rem; display: inline-block;">Try
+                        Admin Panel</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">🎯 Student Portal Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="testFeature('dashboard')">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">📊</h3>
+                    <p style="font-weight: 500;">Dashboard</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Progress tracking & stats</p>
+                </div>
+                <div class="feature-item" onclick="testFeature('documents')">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">📄</h3>
+                    <p style="font-weight: 500;">Documents</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Drag & drop uploads</p>
+                </div>
+                <div class="feature-item" onclick="testFeature('universities')">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">🎓</h3>
+                    <p style="font-weight: 500;">Universities</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Shortlist & applications</p>
+                </div>
+                <div class="feature-item" onclick="testFeature('essays')">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">✍️</h3>
+                    <p style="font-weight: 500;">Essays</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Version control & feedback</p>
+                </div>
+                <div class="feature-item" onclick="testFeature('calendar')">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">📅</h3>
+                    <p style="font-weight: 500;">Calendar</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Test dates & deadlines</p>
+                </div>
+                <div class="feature-item" onclick="testFeature('messages')">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">💬</h3>
+                    <p style="font-weight: 500;">Messages</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Counselor communication</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">🏫 School Portal Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">📈</h3>
+                    <p style="font-weight: 500;">Analytics</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Acceptance rates & stats</p>
+                </div>
+                <div class="feature-item">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">👥</h3>
+                    <p style="font-weight: 500;">Students</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Track all students</p>
+                </div>
+                <div class="feature-item">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">📊</h3>
+                    <p style="font-weight: 500;">Reports</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Charts & visualizations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">⚙️ Admin Panel Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">🎛️</h3>
+                    <p style="font-weight: 500;">Dashboard</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">System overview</p>
+                </div>
+                <div class="feature-item">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍🏫</h3>
+                    <p style="font-weight: 500;">Counselor Assignment</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Drag & drop matching</p>
+                </div>
+                <div class="feature-item">
+                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">📉</h3>
+                    <p style="font-weight: 500;">CRM & Reports</p>
+                    <p style="font-size: 0.85rem; color: var(--muted-fg);">Analytics & insights</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">🛠️ Technical Features</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>Configurable API</strong> - Single file configuration (config.js)
+                </li>
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>Mock Data Mode</strong> - Complete mock API for development
+                </li>
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>No Build Process</strong> - Pure HTML/CSS/JavaScript
+                </li>
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>Local Storage</strong> - Client-side session management
+                </li>
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>Toast Notifications</strong> - Real-time user feedback
+                </li>
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>Form Validation</strong> - Client-side input validation
+                </li>
+                <li style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--muted); border-radius: 4px;">
+                    ✅ <strong>Responsive Design</strong> - Works on all devices
+                </li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">📚 Documentation</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="card">
+                    <h4>🚀 Quick Start Guide</h4>
+                    <p style="font-size: 0.9rem; color: var(--muted-fg); margin: 0.5rem 0;">
+                        Get started in 5 minutes with step-by-step instructions.
+                    </p>
+                    <a href="../QUICKSTART.md" class="btn btn-outline" style="margin-top: 0.5rem;">Read Guide</a>
+                </div>
+                <div class="card">
+                    <h4>📖 JavaScript Guide</h4>
+                    <p style="font-size: 0.9rem; color: var(--muted-fg); margin: 0.5rem 0;">
+                        Complete documentation of all JavaScript functions.
+                    </p>
+                    <a href="../JAVASCRIPT_GUIDE.md" class="btn btn-outline" style="margin-top: 0.5rem;">Read Docs</a>
+                </div>
+                <div class="card">
+                    <h4>🔌 API Specification</h4>
+                    <p style="font-size: 0.9rem; color: var(--muted-fg); margin: 0.5rem 0;">
+                        Complete API endpoints and request/response formats.
+                    </p>
+                    <a href="../API_SPECIFICATION.md" class="btn btn-outline" style="margin-top: 0.5rem;">Read Spec</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section"
+            style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; border-bottom-color: rgba(255,255,255,0.3);">Ready to Get Started?</h2>
+            <p style="font-size: 1.1rem; margin: 1rem 0;">Choose your portal and start exploring!</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+                <a href="login.html" class="btn" style="background: white; color: var(--primary);">Login</a>
+                <a href="signup.html" class="btn"
+                    style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white;">Sign Up</a>
+                <a href="index.html" class="btn"
+                    style="background: transparent; color: white; border: 2px solid white;">Back to Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>EduCounsel</h4>
+                <p>Guiding students across Pakistan and Saudi Arabia to top universities worldwide.</p>
+            </div>
+            <div class="footer-section">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="demo.html">Demo</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-copyright">
+            <p>&copy; 2025 EduCounsel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="mockData.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function testFeature(feature) {
+            const featureUrls = {
+                'dashboard': 'student/dashboard.html',
+                'documents': 'student/documents.html',
+                'universities': 'student/universities.html',
+                'essays': 'student/essays.html',
+                'calendar': 'student/calendar.html',
+                'messages': 'student/messages.html'
+            };
+
+            if (featureUrls[feature]) {
+                Toast.info('Please login first to access this feature');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+
+</html>

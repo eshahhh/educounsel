@@ -1,0 +1,321 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id                String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email             String    @unique
+  password_hash     String
+  role              String
+  full_name         String?
+  phone             String?
+  is_active         Boolean   @default(true)
+  last_login        DateTime?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  
+  student_profile           student_profiles?         @relation("user_student_profile")
+  counseled_students        student_profiles[]        @relation("counselor_students")
+  school                    schools?
+  counselor_profile         counselor_profiles?       @relation("user_counselor_profile")
+  applications              applications[]
+  documents                 documents[]               @relation("student_documents")
+  reviewed_documents        documents[]               @relation("reviewer_documents")
+  essays                    essays[]                  @relation("student_essays")
+  reviewed_essays           essays[]                  @relation("reviewer_essays")
+  calendar_events           calendar_events[]
+  sent_messages             messages[]                @relation("sent_messages")
+  received_messages         messages[]                @relation("received_messages")
+  notifications             notifications[]
+  university_shortlist      university_shortlist[]
+  activity_logs             activity_logs[]
+  sessions                  sessions[]
+
+  @@map("users")
+}
+
+model student_profiles {
+  id                          String    @id @db.Uuid
+  counselor_id                String?   @db.Uuid
+  school_id                   String?   @db.Uuid
+  grade_level                 String?
+  gpa                         Float?
+  sat_score                   Int?
+  act_score                   Int?
+  extracurriculars            String?
+  interests                   String?
+  target_major                String?
+  created_at                  DateTime  @default(now())
+  updated_at                  DateTime  @updatedAt
+  
+  user                        users     @relation("user_student_profile", fields: [id], references: [id], onDelete: Cascade)
+  counselor                   users?    @relation("counselor_students", fields: [counselor_id], references: [id])
+  school                      schools?  @relation(fields: [school_id], references: [id])
+
+  @@index([counselor_id], map: "idx_student_profiles_counselor")
+  @@index([school_id], map: "idx_student_profiles_school")
+  @@map("student_profiles")
+}
+
+model schools {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id         String?   @unique @db.Uuid
+  school_name     String
+  address         String?
+  city            String?
+  state           String?
+  country         String?
+  zip_code        String?
+  website         String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  user            users?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  students        student_profiles[]
+
+  @@map("schools")
+}
+
+model counselor_profiles {
+  id                      String    @id @db.Uuid
+  organization            String?
+  bio                     String?
+  specialization          String?
+  years_experience        Int?
+  created_at              DateTime  @default(now())
+  updated_at              DateTime  @updatedAt
+  
+  user                    users     @relation("user_counselor_profile", fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("counselor_profiles")
+}
+
+model universities {
+  id                String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name              String
+  location          String?
+  country           String?
+  ranking           Int?
+  acceptance_rate   Float?
+  tuition_fees      Float?
+  website           String?
+  description       String?
+  logo_url          String?
+  is_active         Boolean   @default(true)
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  
+  programs                university_programs[]
+  applications            applications[]
+  university_shortlist    university_shortlist[]
+
+  @@map("universities")
+}
+
+model university_programs {
+  id                String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  university_id     String    @db.Uuid
+  program_name      String
+  degree_type       String?
+  duration          String?
+  description       String?
+  created_at        DateTime  @default(now())
+  
+  university        universities @relation(fields: [university_id], references: [id], onDelete: Cascade)
+  applications      applications[]
+
+  @@map("university_programs")
+}
+
+model applications {
+  id                    String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  student_id            String    @db.Uuid
+  university_id         String?   @db.Uuid
+  program_id            String?   @db.Uuid
+  status                String    @default("not_started")
+  deadline              DateTime?
+  submitted_at          DateTime?
+  decision              String?
+  decision_date         DateTime?
+  notes                 String?
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  
+  student               users     @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  university            universities? @relation(fields: [university_id], references: [id])
+  program               university_programs? @relation(fields: [program_id], references: [id])
+  documents             documents[]
+  essays                essays[]
+
+  @@index([student_id], map: "idx_applications_student")
+  @@map("applications")
+}
+
+model documents {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  student_id      String    @db.Uuid
+  application_id  String?   @db.Uuid
+  file_name       String
+  file_type       String
+  file_size       Int
+  file_url        String
+  document_type   String
+  uploaded_at     DateTime  @default(now())
+  reviewed_at     DateTime?
+  reviewed_by     String?   @db.Uuid
+  reviewer_notes  String?
+  
+  student         users     @relation("student_documents", fields: [student_id], references: [id], onDelete: Cascade)
+  application     applications? @relation(fields: [application_id], references: [id], onDelete: SetNull)
+  reviewer        users?    @relation("reviewer_documents", fields: [reviewed_by], references: [id])
+
+  @@index([student_id], map: "idx_documents_student")
+  @@map("documents")
+}
+
+model essays {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  student_id      String    @db.Uuid
+  application_id  String?   @db.Uuid
+  title           String
+  prompt          String?
+  content         String?
+  word_count      Int?
+  version         Int       @default(1)
+  status          String    @default("draft")
+  feedback        String?
+  reviewed_by     String?   @db.Uuid
+  reviewed_at     DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  student         users     @relation("student_essays", fields: [student_id], references: [id], onDelete: Cascade)
+  application     applications? @relation(fields: [application_id], references: [id], onDelete: SetNull)
+  reviewer        users?    @relation("reviewer_essays", fields: [reviewed_by], references: [id])
+  versions        essay_versions[]
+
+  @@index([student_id], map: "idx_essays_student")
+  @@map("essays")
+}
+
+model essay_versions {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  essay_id        String    @db.Uuid
+  version_number  Int
+  content         String
+  word_count      Int?
+  created_at      DateTime  @default(now())
+  
+  essay           essays    @relation(fields: [essay_id], references: [id], onDelete: Cascade)
+
+  @@index([essay_id], map: "idx_essay_versions_essay")
+  @@map("essay_versions")
+}
+
+model calendar_events {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  student_id      String    @db.Uuid
+  title           String
+  description     String?
+  event_type      String
+  event_date      DateTime
+  reminder_sent   Boolean   @default(false)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  student         users     @relation(fields: [student_id], references: [id], onDelete: Cascade)
+
+  @@index([student_id, event_date], map: "idx_calendar_student_date")
+  @@map("calendar_events")
+}
+
+model messages {
+  id                String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  sender_id         String    @db.Uuid
+  recipient_id      String    @db.Uuid
+  subject           String?
+  content           String
+  is_read           Boolean   @default(false)
+  read_at           DateTime?
+  parent_message_id String?   @db.Uuid
+  created_at        DateTime  @default(now())
+  
+  sender            users     @relation("sent_messages", fields: [sender_id], references: [id], onDelete: Cascade)
+  recipient         users     @relation("received_messages", fields: [recipient_id], references: [id], onDelete: Cascade)
+  parent_message    messages? @relation("message_thread", fields: [parent_message_id], references: [id])
+  replies           messages[] @relation("message_thread")
+
+  @@index([recipient_id], map: "idx_messages_recipient")
+  @@index([sender_id], map: "idx_messages_sender")
+  @@map("messages")
+}
+
+model notifications {
+  id                  String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id             String    @db.Uuid
+  title               String
+  message             String
+  notification_type   String
+  is_read             Boolean   @default(false)
+  read_at             DateTime?
+  link_url            String?
+  created_at          DateTime  @default(now())
+  
+  user                users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id], map: "idx_notifications_user")
+  @@index([user_id, is_read], map: "idx_notifications_unread")
+  @@map("notifications")
+}
+
+model university_shortlist {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  student_id      String    @db.Uuid
+  university_id   String    @db.Uuid
+  notes           String?
+  priority        Int?
+  added_at        DateTime  @default(now())
+  
+  student         users     @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  university      universities @relation(fields: [university_id], references: [id], onDelete: Cascade)
+
+  @@unique([student_id, university_id])
+  @@index([student_id], map: "idx_university_shortlist_student")
+  @@map("university_shortlist")
+}
+
+model activity_logs {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id         String?   @db.Uuid
+  action          String
+  resource_type   String?
+  resource_id     String?   @db.Uuid
+  ip_address      String?
+  user_agent      String?
+  created_at      DateTime  @default(now())
+  
+  user            users?    @relation(fields: [user_id], references: [id])
+
+  @@index([user_id], map: "idx_activity_logs_user")
+  @@map("activity_logs")
+}
+
+model sessions {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id     String    @db.Uuid
+  token_hash  String
+  expires_at  DateTime
+  ip_address  String?
+  user_agent  String?
+  created_at  DateTime  @default(now())
+  
+  user        users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id], map: "idx_sessions_user")
+  @@map("sessions")
+}

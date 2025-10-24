@@ -30,8 +30,14 @@ export const createApp = (): Application => {
 
     app.use(rateLimiter);
 
-    app.get('/test-working', (_req, res) => {
-        res.json({ status: 'ok', timestamp: new Date().toISOString() });
+    app.get('/test', (_req, res) => {
+        res.json({
+            success: true,
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+            service: 'EduCounsel API',
+            version: '1.0.0'
+        });
     });
 
     app.use('/api/auth', authRoutes);

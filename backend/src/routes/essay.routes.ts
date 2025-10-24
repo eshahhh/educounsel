@@ -1,10 +1,34 @@
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth';
+import { validate } from '../middleware/validation';
+import {
+    getEssays,
+    getEssayById,
+    createEssay,
+    updateEssay,
+    deleteEssay,
+} from '../controllers/essay.controller';
+import {
+    createEssaySchema,
+    updateEssaySchema,
+    getEssayByIdSchema,
+} from '../validators/essay.validator';
 
 const router = Router();
 
-router.get('/', authenticate, (_req, res) => {
-    res.json({ success: true, message: 'Essay api - tbd' });
-});
+// Get all essays
+router.get('/', authenticate, getEssays);
+
+// Get essay by ID
+router.get('/:id', authenticate, validate(getEssayByIdSchema), getEssayById);
+
+// Create essay
+router.post('/', authenticate, validate(createEssaySchema), createEssay);
+
+// Update essay
+router.put('/:id', authenticate, validate(updateEssaySchema), updateEssay);
+
+// Delete essay
+router.delete('/:id', authenticate, deleteEssay);
 
 export default router;

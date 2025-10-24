@@ -1,10 +1,20 @@
 import { Router } from 'express';
-import { authenticate } from '../middleware/auth';
+import { authenticate, authorize } from '../middleware/auth';
+import {
+    getUserProfile,
+    updateUserProfile,
+    deactivateUser,
+} from '../controllers/user.controller';
 
 const router = Router();
 
-router.get('/', authenticate, (req, res) => {
-    res.json({ success: true, message: 'User api - tbd' });
-});
+// Get user profile
+router.get('/:id', authenticate, getUserProfile);
+
+// Update user profile
+router.put('/:id', authenticate, updateUserProfile);
+
+// Deactivate user (admin only)
+router.post('/:id/deactivate', authenticate, authorize('admin'), deactivateUser);
 
 export default router;

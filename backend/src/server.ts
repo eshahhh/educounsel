@@ -2,17 +2,21 @@ import { createApp } from './app';
 import { config } from './config';
 import { logger } from './utils/logger';
 import { prisma } from './config/database';
+import { initializeBuckets } from './services/storage.service';
 
 const startServer = async () => {
     try {
         await prisma.$connect();
         logger.info('Database connected successfully');
 
+        await initializeBuckets();
+        logger.info('Storage buckets initialized');
+
         const app = createApp();
 
         const server = app.listen(config.port, () => {
             logger.info(`Server running on port ${config.port} in ${config.env} mode`);
-            logger.info(`Health check available at http://localhost:${config.port}/health`);
+            logger.info(`Health check available at http://localhost:${config.port}/test`);
         });
 
         const shutdown = async (signal: string) => {

@@ -9,6 +9,14 @@ import {
     verifyRefreshToken,
 } from '../utils/auth';
 import { logger } from '../utils/logger';
+import {
+    sendVerificationEmail,
+    sendPasswordResetEmail,
+    verifyEmailToken,
+    verifyPasswordResetToken,
+    invalidatePasswordResetToken,
+    sendWelcomeEmail,
+} from '../services/email.service';
 
 export const signup = async (
     req: Request,
@@ -84,6 +92,9 @@ export const signup = async (
 
         logger.info(`User registered: ${user.email}`);
 
+        await sendVerificationEmail(user.id, user.email);
+        await sendWelcomeEmail(user.email, fullName);
+
         res.status(201).json({
             success: true,
             data: {
@@ -91,6 +102,7 @@ export const signup = async (
                 accessToken,
                 refreshToken,
             },
+            message: 'Account created successfully. Please check your email to verify your account.',
         });
     } catch (error) {
         next(error);
@@ -301,6 +313,124 @@ export const getMe = async (
         res.json({
             success: true,
             data: user,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const forgotPassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { email } = req.body;
+
+        const user = await prisma.users.findUnique({
+            where: { email },
+        });
+
+        if (!user) {
+            return res.json({
+                success: true,
+                message: 'If an account exists with this email, you will receive a password reset link.',
+            });
+        }
+
+        await sendPasswordResetEmail(user.id, user.email);
+
+        logger.info(`Password reset requested for: ${user.email}`);
+
+        res.json({
+            success: true,
+            message: 'If an account exists with this email, you will receive a password reset link.',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const resetPassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        const userId = await verifyPasswordResetToken(token);
+
+        const passwordHash = await hashPassword(newPassword);
+
+        await prisma.users.update({
+            where: { id: userId },
+            data: { password_hash: passwordHash },
+        });
+
+        await prisma.sessions.deleteMany({
+            where: { user_id: userId },
+        });
+
+        invalidatePasswordResetToken(token);
+
+        logger.info(`Password reset successful for user: ${userId}`);
+
+        res.json({
+            success: true,
+            message: 'Password reset successful. Please login with your new password.',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const verifyEmail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { token } = req.body;
+
+        const userId = await verifyEmailToken(token);
+
+        logger.info(`Email verified for user: ${userId}`);
+
+        res.json({
+            success: true,
+            message: 'Email verified successfully.',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const resendVerificationEmail = async (
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        if (!req.user) {
+            throw new AppError(401, 'Not authenticated');
+        }
+
+        const user = await prisma.users.findUnique({
+            where: { id: req.user.userId },
+        });
+
+        if (!user) {
+            throw new AppError(404, 'User not found');
+        }
+
+        await sendVerificationEmail(user.id, user.email);
+
+        logger.info(`Verification email resent to: ${user.email}`);
+
+        res.json({
+            success: true,
+            message: 'Verification email sent.',
         });
     } catch (error) {
         next(error);

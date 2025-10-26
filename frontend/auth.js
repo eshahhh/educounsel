@@ -41,33 +41,37 @@ async function handleStudentLogin(e) {
     }
 
     try {
-        let result;
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.login(email, password, 'student');
-        } else {
-            result = await API.post(Config.ENDPOINTS.AUTH.LOGIN, {
-                email,
-                password,
-                role: 'student'
-            });
-        }
+        const result = await API.post(Config.ENDPOINTS.AUTH.LOGIN, {
+            email,
+            password
+        });
 
-        if (result.success) {
-            Storage.set(Config.STORAGE_KEYS.AUTH_TOKEN, result.token);
-            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.user);
-            Storage.set(Config.STORAGE_KEYS.USER_ROLE, 'student');
+        if (result.success && result.data && result.data.accessToken) {
+            API.setAuthToken(result.data.accessToken);
+            if (result.data.refreshToken) {
+                API.setRefreshToken(result.data.refreshToken);
+            }
+            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.data.user);
+            Storage.set(Config.STORAGE_KEYS.USER_ROLE, result.data.user.role);
 
             Toast.success('Login successful! Redirecting...');
 
             setTimeout(() => {
-                window.location.href = 'student/dashboard.html';
+                if (result.data.user.role === 'student') {
+                    window.location.href = 'student/dashboard.html';
+                } else if (result.data.user.role === 'counselor' || result.data.user.role === 'school') {
+                    window.location.href = 'school/dashboard.html';
+                } else if (result.data.user.role === 'admin') {
+                    window.location.href = 'admin/dashboard.html';
+                }
             }, 1000);
         } else {
-            Toast.error(result.error || 'Login failed. Please try again.');
+            Toast.error('Login failed. Please check your credentials and try again.');
         }
     } catch (error) {
         console.error('Login error:', error);
-        Toast.error('An error occurred. Please try again.');
+        const errorMessage = error.message || 'Invalid email or password. Please try again.';
+        Toast.error(errorMessage);
     }
 }
 
@@ -88,33 +92,37 @@ async function handleSchoolLogin(e) {
     }
 
     try {
-        let result;
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.login(email, password, 'school');
-        } else {
-            result = await API.post(Config.ENDPOINTS.AUTH.LOGIN, {
-                email,
-                password,
-                role: 'school'
-            });
-        }
+        const result = await API.post(Config.ENDPOINTS.AUTH.LOGIN, {
+            email,
+            password
+        });
 
-        if (result.success) {
-            Storage.set(Config.STORAGE_KEYS.AUTH_TOKEN, result.token);
-            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.user);
-            Storage.set(Config.STORAGE_KEYS.USER_ROLE, 'school');
+        if (result.success && result.data && result.data.accessToken) {
+            API.setAuthToken(result.data.accessToken);
+            if (result.data.refreshToken) {
+                API.setRefreshToken(result.data.refreshToken);
+            }
+            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.data.user);
+            Storage.set(Config.STORAGE_KEYS.USER_ROLE, result.data.user.role);
 
             Toast.success('Login successful! Redirecting...');
 
             setTimeout(() => {
-                window.location.href = 'school/dashboard.html';
+                if (result.data.user.role === 'student') {
+                    window.location.href = '../student/dashboard.html';
+                } else if (result.data.user.role === 'counselor' || result.data.user.role === 'school') {
+                    window.location.href = '../school/dashboard.html';
+                } else if (result.data.user.role === 'admin') {
+                    window.location.href = '../admin/dashboard.html';
+                }
             }, 1000);
         } else {
-            Toast.error(result.error || 'Login failed. Please try again.');
+            Toast.error('Login failed. Please check your credentials and try again.');
         }
     } catch (error) {
         console.error('Login error:', error);
-        Toast.error('An error occurred. Please try again.');
+        const errorMessage = error.message || 'Invalid email or password. Please try again.';
+        Toast.error(errorMessage);
     }
 }
 
@@ -141,30 +149,20 @@ async function handleStudentSignup(e) {
     }
 
     try {
-        let result;
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.signup({
-                name,
-                email,
-                password,
-                role: 'student',
-                country: 'Pakistan',
-                counselorId: 1,
-                profileComplete: 30
-            });
-        } else {
-            result = await API.post(Config.ENDPOINTS.AUTH.SIGNUP, {
-                name,
-                email,
-                password,
-                role: 'student'
-            });
-        }
+        const result = await API.post(Config.ENDPOINTS.AUTH.SIGNUP, {
+            fullName: name,
+            email,
+            password,
+            role: 'student'
+        });
 
-        if (result.success) {
-            Storage.set(Config.STORAGE_KEYS.AUTH_TOKEN, result.token);
-            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.user);
-            Storage.set(Config.STORAGE_KEYS.USER_ROLE, 'student');
+        if (result.success && result.data && result.data.accessToken) {
+            API.setAuthToken(result.data.accessToken);
+            if (result.data.refreshToken) {
+                API.setRefreshToken(result.data.refreshToken);
+            }
+            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.data.user);
+            Storage.set(Config.STORAGE_KEYS.USER_ROLE, result.data.user.role);
 
             Toast.success('Account created successfully! Redirecting...');
 
@@ -172,11 +170,12 @@ async function handleStudentSignup(e) {
                 window.location.href = 'student/dashboard.html';
             }, 1000);
         } else {
-            Toast.error(result.error || 'Signup failed. Please try again.');
+            Toast.error('Signup failed. Please try again.');
         }
     } catch (error) {
         console.error('Signup error:', error);
-        Toast.error('An error occurred. Please try again.');
+        const errorMessage = error.message || 'Failed to create account. Please try again.';
+        Toast.error(errorMessage);
     }
 }
 
@@ -203,29 +202,20 @@ async function handleSchoolSignup(e) {
     }
 
     try {
-        let result;
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.signup({
-                name,
-                email,
-                password,
-                role: 'school',
-                country: 'Pakistan',
-                studentCount: 0
-            });
-        } else {
-            result = await API.post(Config.ENDPOINTS.AUTH.SIGNUP, {
-                name,
-                email,
-                password,
-                role: 'school'
-            });
-        }
+        const result = await API.post(Config.ENDPOINTS.AUTH.SIGNUP, {
+            fullName: name,
+            email,
+            password,
+            role: 'counselor'
+        });
 
-        if (result.success) {
-            Storage.set(Config.STORAGE_KEYS.AUTH_TOKEN, result.token);
-            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.user);
-            Storage.set(Config.STORAGE_KEYS.USER_ROLE, 'school');
+        if (result.success && result.data && result.data.accessToken) {
+            API.setAuthToken(result.data.accessToken);
+            if (result.data.refreshToken) {
+                API.setRefreshToken(result.data.refreshToken);
+            }
+            Storage.set(Config.STORAGE_KEYS.USER_DATA, result.data.user);
+            Storage.set(Config.STORAGE_KEYS.USER_ROLE, result.data.user.role);
 
             Toast.success('Account created successfully! Redirecting...');
 
@@ -233,15 +223,17 @@ async function handleSchoolSignup(e) {
                 window.location.href = 'school/dashboard.html';
             }, 1000);
         } else {
-            Toast.error(result.error || 'Signup failed. Please try again.');
+            Toast.error('Signup failed. Please try again.');
         }
     } catch (error) {
         console.error('Signup error:', error);
-        Toast.error('An error occurred. Please try again.');
+        const errorMessage = error.message || 'Failed to create account. Please try again.';
+        Toast.error(errorMessage);
     }
 }
 
 function logout() {
+    API.clearTokens();
     Storage.clear();
     Toast.success('Logged out successfully');
     setTimeout(() => {

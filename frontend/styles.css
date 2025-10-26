@@ -64,7 +64,6 @@ body {
     width: 32px;
     height: 32px;
     background: var(--primary);
-    border-radius: 4px;
 }
 
 .nav-links {
@@ -86,7 +85,6 @@ body {
 
 .btn {
     padding: 0.5rem 1rem;
-    border-radius: 6px;
     border: none;
     cursor: pointer;
     font-size: 0.9rem;
@@ -162,7 +160,6 @@ body {
 .card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 8px;
     padding: 1.5rem;
 }
 
@@ -219,7 +216,6 @@ body {
     width: 80px;
     height: 80px;
     background: var(--muted);
-    border-radius: 50%;
     margin: 0 auto 1rem;
 }
 
@@ -238,7 +234,6 @@ body {
 
 .accordion {
     border: 1px solid var(--border);
-    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -334,7 +329,6 @@ body {
 
 .sidebar {
     border: 1px solid var(--border);
-    border-radius: 8px;
     background: var(--card);
     height: fit-content;
     position: sticky;
@@ -358,7 +352,6 @@ body {
     text-decoration: none;
     color: var(--foreground);
     font-size: 0.9rem;
-    border-radius: 6px;
     margin-bottom: 0.25rem;
 }
 
@@ -404,7 +397,6 @@ body {
     width: 100%;
     height: 8px;
     background: var(--muted);
-    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -431,7 +423,6 @@ body {
     width: 100%;
     padding: 0.5rem 0.75rem;
     border: 1px solid var(--border);
-    border-radius: 6px;
     font-size: 0.9rem;
     font-family: inherit;
 }
@@ -488,7 +479,6 @@ body {
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
     font-weight: 500;
-    border-radius: 4px;
     background: var(--secondary);
     color: var(--secondary-fg);
 }
@@ -543,7 +533,6 @@ tr:last-child td {
 .calendar-day {
     aspect-ratio: 1;
     border: 1px solid var(--border);
-    border-radius: 6px;
     padding: 0.5rem;
     text-align: center;
     font-size: 0.85rem;
@@ -563,7 +552,6 @@ tr:last-child td {
 .event-dot {
     width: 8px;
     height: 8px;
-    border-radius: 50%;
 }
 
 .event-dot.sat {
@@ -580,7 +568,6 @@ tr:last-child td {
 
 .file-upload-zone {
     border: 2px dashed var(--border);
-    border-radius: 8px;
     padding: 2rem;
     text-align: center;
     color: var(--muted-fg);
@@ -600,7 +587,6 @@ tr:last-child td {
 
 .file-item {
     border: 1px solid var(--border);
-    border-radius: 6px;
     padding: 0.75rem;
 }
 
@@ -608,7 +594,6 @@ tr:last-child td {
     width: 100%;
     height: 100px;
     background: var(--muted);
-    border-radius: 4px;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
@@ -644,7 +629,6 @@ tr:last-child td {
 
 .modal-content {
     background: var(--card);
-    border-radius: 8px;
     padding: 1.5rem;
     max-width: 500px;
     width: 90%;
@@ -747,7 +731,6 @@ tr:last-child td {
     height: 20px;
     border: 3px solid var(--border);
     border-top-color: var(--primary);
-    border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
@@ -760,7 +743,6 @@ tr:last-child td {
 .chart-placeholder {
     height: 250px;
     background: var(--muted);
-    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;

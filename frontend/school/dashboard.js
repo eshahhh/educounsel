@@ -20,17 +20,9 @@ function updateSchoolName() {
 
 async function loadSchoolData() {
     try {
-        let statsResult;
-
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            statsResult = await MockData.getSchoolStats(currentUser.id);
-            const allStudentsResult = await MockData.getAllStudents();
-            students = allStudentsResult.data.slice(0, 5);
-        } else {
-            statsResult = await API.get(Config.ENDPOINTS.SCHOOLS.STATS.replace(':id', currentUser.id));
-            const studentsResult = await API.get(Config.ENDPOINTS.SCHOOLS.STUDENTS.replace(':id', currentUser.id));
-            students = studentsResult.data;
-        }
+        let statsResult = await API.get(Config.ENDPOINTS.SCHOOLS.STATS.replace(':id', currentUser.id));
+        const studentsResult = await API.get(Config.ENDPOINTS.SCHOOLS.STUDENTS.replace(':id', currentUser.id));
+        students = studentsResult.data;
 
         if (statsResult.success) {
             updateStatsCards(statsResult.data);

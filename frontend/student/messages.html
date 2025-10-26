@@ -47,36 +47,7 @@
                         <button class="btn btn-primary" onclick="openMessageModal()">Compose</button>
                     </div>
 
-                    <div class="space-y-4">
-                        <div class="card" style="padding: 1rem;">
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-                                <h4>From: Ms. Khan (Counselor)</h4>
-                                <span style="font-size: 0.8rem; color: var(--muted-fg);">2 hours ago</span>
-                            </div>
-                            <p style="color: var(--muted-fg); font-size: 0.9rem;">Your essay draft looks great! I've
-                                added some feedback. Please review and update.</p>
-                        </div>
-
-                        <div class="card" style="padding: 1rem;">
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-                                <h4>From: Admissions Office</h4>
-                                <span style="font-size: 0.8rem; color: var(--muted-fg);">1 day ago</span>
-                            </div>
-                            <p style="color: var(--muted-fg); font-size: 0.9rem;">Thank you for your application. We
-                                will review it and get back to you soon.</p>
-                        </div>
-
-                        <div class="card" style="padding: 1rem;">
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-                                <h4>To: Ms. Khan (Counselor)</h4>
-                                <span style="font-size: 0.8rem; color: var(--muted-fg);">3 days ago</span>
-                            </div>
-                            <p style="color: var(--muted-fg); font-size: 0.9rem;">Can we schedule a call to discuss my
-                                university shortlist?</p>
-                        </div>
+                    <div class="space-y-4" id="messages-container">
                     </div>
                 </div>
             </div>
@@ -93,10 +64,11 @@
                 <div class="form-group">
                     <label class="form-label" for="recipient">To</label>
                     <select id="recipient" class="form-select">
-                        <option>Counselor (Ms. Khan)</option>
-                        <option>Admin</option>
-                        <option>Support</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="messageSubject">Subject</label>
+                    <input type="text" id="messageSubject" class="form-input" placeholder="Enter subject...">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="messageText">Message</label>
@@ -111,7 +83,6 @@
     </div>
 
     <script src="../config.js"></script>
-    <script src="../mockData.js"></script>
     <script src="../app.js"></script>
     <script src="../auth.js"></script>
     <script src="common.js"></script>

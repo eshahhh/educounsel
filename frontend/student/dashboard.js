@@ -9,34 +9,40 @@ document.addEventListener('DOMContentLoaded', async function () {
     initMiniCalendar();
 });
 
-function updateUserInfo() {
-    const userName = currentUser.name || 'Student';
+
+window.updateUserInfo = function () {
+    // Support different name fields that may come from the API
+    const userName = currentUser?.full_name || currentUser?.fullName || currentUser?.name || 'Student';
     const firstName = userName.split(' ')[0];
 
     const userNameElements = document.querySelectorAll('#user-name, #welcome-name');
     userNameElements.forEach(el => {
         el.textContent = firstName;
     });
-}
+};
 
 async function loadDashboardData() {
     try {
-        let statsResult, progressResult;
+        // Fetch dashboard for the authenticated student.
+        // Use the /students/me/dashboard endpoint so we don't rely on client-side id inference.
+        const dashboardResult = await API.get('/students/me/dashboard');
+        // Some backends return { success, data } while others may return the payload directly.
+        const dashboardData = dashboardResult.data || dashboardResult;
 
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            statsResult = await MockData.getStudentStats(currentUser.id);
-            progressResult = statsResult;
-        } else {
-            statsResult = await API.get(Config.ENDPOINTS.STUDENTS.STATS.replace(':id', currentUser.id));
-            progressResult = await API.get(Config.ENDPOINTS.STUDENTS.PROGRESS.replace(':id', currentUser.id));
+        if (!dashboardData) {
+            throw new Error('Invalid dashboard response');
         }
 
-        if (statsResult.success) {
-            updateStatsCards(statsResult.data);
-            updateProgressBars(statsResult.data.progressTracking);
+        // Persist minimal user info if provided by the API
+        if (dashboardData.student && dashboardData.student.name) {
+            currentUser = Object.assign({}, currentUser, { name: dashboardData.student.name });
+            Storage.set(Config.STORAGE_KEYS.USER_DATA, currentUser);
+            updateUserInfo();
         }
 
-        await loadCounselorInfo();
+        updateStatsCards(dashboardData.stats || {});
+        updateProgressBars(dashboardData.progressTracking || {});
+        updateCounselorInfo(dashboardData.counselor || null);
 
     } catch (error) {
         console.error('Error loading dashboard data:', error);
@@ -93,33 +99,18 @@ function updateProgressBars(progress) {
     }
 }
 
-async function loadCounselorInfo() {
-    try {
-        let result;
+function updateCounselorInfo(counselor) {
+    const counselorSection = document.querySelector('.card h3');
 
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.getStudentProfile(currentUser.id);
-        } else {
-            result = await API.get(Config.ENDPOINTS.STUDENTS.PROFILE.replace(':id', currentUser.id));
+    if (counselorSection && counselorSection.textContent.includes('Counselor')) {
+        const counselorCard = counselorSection.closest('.card');
+        const counselorInfo = counselorCard.querySelector('div > div:first-child');
+        if (counselorInfo) {
+            counselorInfo.innerHTML = `
+                <div style="font-weight: 500; margin-bottom: 0.25rem;">${counselor ? counselor.name : 'Not Assigned'}</div>
+                <div style="font-size: 0.9rem; color: var(--muted-fg);">${counselor ? counselor.email : ''}</div>
+            `;
         }
-
-        if (result.success && result.data.counselor) {
-            const counselor = result.data.counselor;
-            const counselorSection = document.querySelector('.card h3:contains("Assigned Counselor")');
-
-            if (counselorSection) {
-                const counselorCard = counselorSection.closest('.card');
-                const counselorName = counselorCard.querySelector('div > div:first-child');
-                if (counselorName) {
-                    counselorName.innerHTML = `
-                        <div style="font-weight: 500; margin-bottom: 0.25rem;">${counselor.name}</div>
-                        <div style="font-size: 0.9rem; color: var(--muted-fg);">Response time: ~${counselor.responseTime}</div>
-                    `;
-                }
-            }
-        }
-    } catch (error) {
-        console.error('Error loading counselor info:', error);
     }
 }
 
@@ -156,59 +147,51 @@ function initMiniCalendar() {
     calendarGrid.style.gap = '0.25rem';
 }
 
-function openMessageModal() {
+// Global function for opening message modal - accessible from dashboard.html
+window.openMessageModal = function () {
     const modal = document.getElementById('messageModal');
     if (modal) {
         modal.style.display = 'block';
         document.getElementById('messageText').value = '';
     }
-}
+};
 
-function closeMessageModal() {
+// (duplicate closeMessageModal removed)
+
+// Global function for closing message modal
+window.closeMessageModal = function () {
     const modal = document.getElementById('messageModal');
     if (modal) {
         modal.style.display = 'none';
     }
-}
+};
 
-async function sendMessage() {
+// Global function for sending message - accessible from dashboard.html
+window.sendMessage = async function () {
     const messageText = document.getElementById('messageText').value;
 
     if (!Validator.required(messageText)) {
-        Toast.error('Please enter a message');
+        Toast.error('Message cannot be empty');
         return;
     }
 
     try {
-        let result;
-
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.sendMessage({
-                from: currentUser.name,
-                fromId: currentUser.id,
-                to: 'Counselor',
-                toId: currentUser.counselorId || 1,
-                subject: 'New Message',
-                message: messageText
-            });
-        } else {
-            result = await API.post(Config.ENDPOINTS.MESSAGES.SEND, {
-                to: currentUser.counselorId,
-                message: messageText
-            });
-        }
+        // Get user's counselor - we'd typically fetch this from the profile
+        const result = await API.post('/messages', {
+            recipientId: currentUser.counselor?.id || '',
+            subject: 'Message from Student',
+            content: messageText
+        });
 
         if (result.success) {
             Toast.success('Message sent successfully!');
             closeMessageModal();
-        } else {
-            Toast.error('Failed to send message');
         }
     } catch (error) {
         console.error('Error sending message:', error);
-        Toast.error('An error occurred');
+        Toast.error(error.message || 'Failed to send message');
     }
-}
+};
 
 window.onclick = function (event) {
     const modal = document.getElementById('messageModal');

@@ -12,18 +12,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 async function loadAdminData() {
     try {
-        let statsResult, studentsResult;
 
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            statsResult = await MockData.getAdminStats();
-            studentsResult = await MockData.getAllStudents();
-            counselors = MockData.counselors;
-        } else {
-            statsResult = await API.get(Config.ENDPOINTS.ADMIN.DASHBOARD);
-            studentsResult = await API.get(Config.ENDPOINTS.ADMIN.STUDENTS);
-            const counselorsResult = await API.get(Config.ENDPOINTS.COUNSELORS.LIST);
-            counselors = counselorsResult.data;
-        }
+        let statsResult = await API.get(Config.ENDPOINTS.ADMIN.DASHBOARD);
+        let studentsResult = await API.get(Config.ENDPOINTS.ADMIN.STUDENTS);
+        const counselorsResult = await API.get(Config.ENDPOINTS.COUNSELORS.LIST);
+        counselors = counselorsResult.data;
 
         if (statsResult.success) {
             updateStatsCards(statsResult.data);
@@ -171,16 +164,10 @@ async function assignCounselorToStudent(studentId, studentName, counselorName) {
             return;
         }
 
-        let result;
-
-        if (Config.USE_MOCK_DATA && typeof MockData !== 'undefined') {
-            result = await MockData.assignCounselor(studentId, counselor.id);
-        } else {
-            result = await API.post(Config.ENDPOINTS.ADMIN.ASSIGN_COUNSELOR, {
-                studentId: studentId,
-                counselorId: counselor.id
-            });
-        }
+        let result = await API.post(Config.ENDPOINTS.ADMIN.ASSIGN_COUNSELOR, {
+            studentId: studentId,
+            counselorId: counselor.id
+        });
 
         if (result.success) {
             Toast.success(`${studentName} assigned to ${counselorName}`);

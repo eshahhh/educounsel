@@ -55,23 +55,23 @@
                 <div class="stats-grid">
                     <div class="card stat-card">
                         <h3>Documents Uploaded</h3>
-                        <div class="value">6/10</div>
+                        <div id="documents-value" class="value">6/10</div>
                         <div class="subtext">Keep going!</div>
                     </div>
                     <div class="card stat-card">
                         <h3>Essays Drafted</h3>
-                        <div class="value">2</div>
-                        <div class="subtext">1 reviewed</div>
+                        <div id="essays-value" class="value">2</div>
+                        <div id="essays-subtext" class="subtext">1 reviewed</div>
                     </div>
                     <div class="card stat-card">
                         <h3>Tests Scheduled</h3>
-                        <div class="value">2</div>
-                        <div class="subtext">SAT, IELTS</div>
+                        <div id="tests-value" class="value">2</div>
+                        <div id="tests-subtext" class="subtext">SAT, IELTS</div>
                     </div>
                     <div class="card stat-card">
                         <h3>Applications</h3>
-                        <div class="value">3</div>
-                        <div class="subtext">in progress</div>
+                        <div id="apps-value" class="value">3</div>
+                        <div id="apps-subtext" class="subtext">in progress</div>
                     </div>
                 </div>
 
@@ -86,37 +86,37 @@
                                     <span style="color: var(--muted-fg);">60%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 60%;"></div>
+                                    <div id="progress-documents" class="progress-fill" style="width: 60%;"></div>
                                 </div>
                             </div>
                             <div>
                                 <div
                                     style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
                                     <span>Essay Drafts</span>
-                                    <span style="color: var(--muted-fg);">40%</span>
+                                    <span id="progress-essays-text" style="color: var(--muted-fg);">40%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 40%;"></div>
+                                    <div id="progress-essays" class="progress-fill" style="width: 40%;"></div>
                                 </div>
                             </div>
                             <div>
                                 <div
                                     style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
                                     <span>Test Prep</span>
-                                    <span style="color: var(--muted-fg);">80%</span>
+                                    <span id="progress-testprep-text" style="color: var(--muted-fg);">80%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 80%;"></div>
+                                    <div id="progress-testprep" class="progress-fill" style="width: 80%;"></div>
                                 </div>
                             </div>
                             <div>
                                 <div
                                     style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
                                     <span>Applications</span>
-                                    <span style="color: var(--muted-fg);">30%</span>
+                                    <span id="progress-apps-text" style="color: var(--muted-fg);">30%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 30%;"></div>
+                                    <div id="progress-apps" class="progress-fill" style="width: 30%;"></div>
                                 </div>
                             </div>
                         </div>
@@ -133,8 +133,9 @@
                     <h3 style="margin-bottom: 1rem;">Assigned Counselor</h3>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div style="font-weight: 500; margin-bottom: 0.25rem;">Ms. Khan</div>
-                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Response time: ~2h</div>
+                            <div id="counselor-name" style="font-weight: 500; margin-bottom: 0.25rem;">Ms. Khan</div>
+                            <div id="counselor-email" style="font-size: 0.9rem; color: var(--muted-fg);">Response time:
+                                ~2h</div>
                         </div>
                         <button class="btn btn-outline">View Profile</button>
                     </div>
@@ -160,7 +161,6 @@
     </div>
 
     <script src="../config.js"></script>
-    <script src="../mockData.js"></script>
     <script src="../app.js"></script>
     <script src="../auth.js"></script>
     <script src="dashboard.js"></script>

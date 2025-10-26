@@ -41,55 +41,46 @@
 
             <div class="content-area">
                 <div class="space-y-4">
-                    <div class="card">
-                        <div
-                            style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-                            <h3>Common App Personal Statement</h3>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Versions: 2</div>
-                            <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                <span class="badge badge-success">Reviewed</span>
-                                <button class="btn btn-outline">Upload New Version</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div
-                            style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-                            <h3>Why University A</h3>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Versions: 1</div>
-                            <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                <button class="btn btn-outline">Upload New Version</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div
-                            style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-                            <h3>Extracurricular Activities Essay</h3>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="font-size: 0.9rem; color: var(--muted-fg);">Versions: 3</div>
-                            <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                <span class="badge badge-success">Reviewed</span>
-                                <button class="btn btn-outline">Upload New Version</button>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- Essays will be loaded here dynamically -->
                     <button class="btn btn-primary" onclick="addNewEssay()">+ Add New Essay</button>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Essay Upload Modal -->
+    <div id="essayModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Essay</h3>
+                <button class="modal-close" onclick="closeEssayModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="essayForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="essayTitle">Essay Title</label>
+                        <input type="text" id="essayTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="essayPrompt">Essay Prompt (Optional)</label>
+                        <textarea id="essayPrompt" name="prompt" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="essayFile">Essay File</label>
+                        <input type="file" id="essayFile" name="essay" accept=".pdf,.doc,.docx,.txt" required>
+                    </div>
+                    <input type="hidden" id="essayId" name="essayId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeEssayModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitEssay()">Upload Essay</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../config.js"></script>
-    <script src="../mockData.js"></script>
+    <script src="../supabase.js"></script>
     <script src="../app.js"></script>
     <script src="../auth.js"></script>
     <script src="common.js"></script>

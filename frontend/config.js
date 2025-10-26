@@ -1,5 +1,10 @@
 const Config = {
-    API_BASE_URL: 'http://localhost:3000/api',
+    API_BASE_URL: 'http://localhost:5000/api',
+    SUPABASE: {
+        URL: 'https://eqalrhqylmfukbopshoz.supabase.co',
+        ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxYWxyaHF5bG1mdWtib3BzaG96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5Njg4MTAsImV4cCI6MjA3NjU0NDgxMH0.rGisuZvu7nMYiA75Btio2J9PQZM0HfesD1sI9g-4Axo', // Replace with your Supabase anon key
+        STORAGE_BUCKET: 'educounsel-files'
+    },
     ENDPOINTS: {
         AUTH: {
             LOGIN: '/auth/login',
@@ -87,9 +92,9 @@ const Config = {
         }
     },
     REQUEST_TIMEOUT: 30000,
-    USE_MOCK_DATA: true,
     STORAGE_KEYS: {
         AUTH_TOKEN: 'educounsel_auth_token',
+        REFRESH_TOKEN: 'educounsel_refresh_token',
         USER_DATA: 'educounsel_user_data',
         USER_ROLE: 'educounsel_user_role',
         REMEMBER_ME: 'educounsel_remember_me'

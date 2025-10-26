@@ -98,50 +98,105 @@ const Storage = {
 };
 
 const API = {
-    get baseURL() {
-        return typeof Config !== 'undefined' ? Config.API_BASE_URL : '/api';
+    baseURL: Config.API_BASE_URL,
+    timeout: Config.REQUEST_TIMEOUT,
+    endpoints: Config.ENDPOINTS,
+
+    getAuthToken: function () {
+        return Storage.get(Config.STORAGE_KEYS.AUTH_TOKEN);
     },
 
-    get useMock() {
-        return typeof Config !== 'undefined' ? Config.USE_MOCK_DATA : false;
+    getRefreshToken: function () {
+        return Storage.get(Config.STORAGE_KEYS.REFRESH_TOKEN);
+    },
+
+    setAuthToken: function (token) {
+        Storage.set(Config.STORAGE_KEYS.AUTH_TOKEN, token);
+    },
+
+    setRefreshToken: function (token) {
+        Storage.set(Config.STORAGE_KEYS.REFRESH_TOKEN, token);
+    },
+
+    clearTokens: function () {
+        Storage.remove(Config.STORAGE_KEYS.AUTH_TOKEN);
+        Storage.remove(Config.STORAGE_KEYS.REFRESH_TOKEN);
     },
 
     request: async function (endpoint, options = {}) {
-        if (this.useMock && typeof MockData !== 'undefined') {
-            return this.handleMockRequest(endpoint, options);
-        }
-
-        const url = `${this.baseURL}${endpoint}`;
-        const defaultOptions = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
+        const token = this.getAuthToken();
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
         };
 
-        const config = { ...defaultOptions, ...options };
+        if (token && !options.skipAuth) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
 
-        const token = Storage.get(Config?.STORAGE_KEYS?.AUTH_TOKEN || 'authToken');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+        if (options.body instanceof FormData) {
+            delete headers['Content-Type'];
         }
 
         try {
-            const response = await fetch(url, config);
+            const response = await fetch(`${this.baseURL}${endpoint}`, {
+                ...options,
+                headers
+            });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (response.status === 401 && !options.skipAuth) {
+                const refreshed = await this.refreshAccessToken();
+                if (refreshed) {
+                    return this.request(endpoint, options);
+                } else {
+                    this.clearTokens();
+                    Storage.remove(Config.STORAGE_KEYS.USER_DATA);
+                    window.location.href = '/login.html';
+                    throw new Error('Session expired. Please login again.');
+                }
             }
 
-            return await response.json();
+            const contentType = response.headers.get('content-type');
+            let data;
+
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+            } else {
+                data = await response.text();
+            }
+
+            if (!response.ok) {
+                const errorMessage = data.message || data.error || `Request failed with status ${response.status}`;
+                throw new Error(errorMessage);
+            }
+
+            return data;
         } catch (error) {
-            console.error('API request failed:', error);
+            console.error('API request error:', error);
             throw error;
         }
     },
 
-    handleMockRequest: async function (endpoint, options) {
-        console.log('Mock API:', options.method || 'GET', endpoint);
-        return { success: false, error: 'Mock handler not implemented for this endpoint' };
+    refreshAccessToken: async function () {
+        const refreshToken = this.getRefreshToken();
+        if (!refreshToken) return false;
+
+        try {
+            const response = await this.request(this.endpoints.AUTH.REFRESH, {
+                method: 'POST',
+                body: JSON.stringify({ refreshToken }),
+                skipAuth: true
+            });
+
+            if (response.accessToken) {
+                this.setAuthToken(response.accessToken);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Token refresh failed:', error);
+            return false;
+        }
     },
 
     get: function (endpoint) {
@@ -149,15 +204,36 @@ const API = {
     },
 
     post: function (endpoint, data) {
-        return this.request(endpoint, {
-            method: 'POST',
-            body: JSON.stringify(data)
-        });
+        const options = {
+            method: 'POST'
+        };
+
+        if (data instanceof FormData) {
+            options.body = data;
+        } else {
+            options.body = JSON.stringify(data);
+        }
+
+        return this.request(endpoint, options);
     },
 
     put: function (endpoint, data) {
+        const options = {
+            method: 'PUT'
+        };
+
+        if (data instanceof FormData) {
+            options.body = data;
+        } else {
+            options.body = JSON.stringify(data);
+        }
+
+        return this.request(endpoint, options);
+    },
+
+    patch: function (endpoint, data) {
         return this.request(endpoint, {
-            method: 'PUT',
+            method: 'PATCH',
             body: JSON.stringify(data)
         });
     },

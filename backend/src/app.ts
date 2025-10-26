@@ -15,6 +15,7 @@ import essayRoutes from './routes/essay.routes';
 import messageRoutes from './routes/message.routes';
 import notificationRoutes from './routes/notification.routes';
 import calendarRoutes from './routes/calendar.routes';
+import counselorsRoutes from './routes/counselors.routes';
 
 export const createApp = (): Application => {
     const app = express();
@@ -50,6 +51,7 @@ export const createApp = (): Application => {
     app.use('/api/messages', messageRoutes);
     app.use('/api/notifications', notificationRoutes);
     app.use('/api/calendar', calendarRoutes);
+    app.use('/api/counselors', counselorsRoutes);
 
     app.use((_req, res) => {
         res.status(404).json({

@@ -302,3 +302,106 @@ export const getStudentDocuments = async (
         next(error);
     }
 };
+
+export const getStudentDashboard = async (
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { id } = req.params;
+
+        // Resolve the student profile id:
+        // - If caller requests /me/dashboard OR the authenticated user is a student, find the student profile by the user's id
+        // - Otherwise use the provided :id param (admin/counselor requests)
+        let studentProfileId = id;
+
+        if (id === 'me' || req.user?.role === 'student') {
+            // In this schema the student_profiles.id maps to the users.id for the user -> student_profile relation.
+            // So we can resolve the profile by the authenticated user's id.
+            const profile = await prisma.student_profiles.findUnique({
+                where: { id: req.user?.userId },
+            });
+
+            if (!profile) {
+                throw new AppError(404, 'Student profile not found for current user');
+            }
+
+            studentProfileId = profile.id;
+        }
+
+        // Fetch student profile with counselor
+        const student = await prisma.student_profiles.findUnique({
+            where: { id: studentProfileId },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        full_name: true,
+                    },
+                },
+                counselor: {
+                    select: {
+                        id: true,
+                        full_name: true,
+                        email: true,
+                    },
+                },
+            },
+        });
+
+        if (!student) {
+            throw new AppError(404, 'Student not found');
+        }
+
+        // Fetch counts
+        const [documentsCount, essays, applicationsCount, testEventsCount] = await Promise.all([
+            prisma.documents.count({ where: { student_id: studentProfileId } }),
+            prisma.essays.findMany({
+                where: { student_id: studentProfileId },
+                select: { status: true },
+            }),
+            prisma.applications.count({ where: { student_id: studentProfileId, status: 'in-progress' } }),
+            prisma.calendar_events.count({ where: { student_id: studentProfileId, event_type: 'test' } }),
+        ]);
+
+        const essaysCount = essays.length;
+        const essaysReviewed = essays.filter(e => e.status === 'reviewed').length;
+
+        // Calculate progress percentages
+        const progressTracking = {
+            documents: Math.min((documentsCount / 10) * 100, 100),
+            essays: Math.min((essaysCount / 5) * 100, 100),
+            testPrep: 0, // Placeholder, can be calculated based on test prep milestones if available
+            applications: Math.min((applicationsCount / 8) * 100, 100),
+        };
+
+        const dashboardData = {
+            student: {
+                id: student.id,
+                name: student.user.full_name,
+            },
+            counselor: student.counselor ? {
+                id: student.counselor.id,
+                name: student.counselor.full_name,
+                email: student.counselor.email,
+            } : null,
+            stats: {
+                documentsUploaded: documentsCount,
+                documentsTotal: 10,
+                essaysDrafted: essaysCount,
+                essaysReviewed,
+                testsScheduled: testEventsCount,
+                applicationsInProgress: applicationsCount,
+            },
+            progressTracking,
+        };
+
+        res.json({
+            success: true,
+            data: dashboardData,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

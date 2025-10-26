@@ -184,37 +184,23 @@ model essays {
   application_id  String?   @db.Uuid
   title           String
   prompt          String?
-  content         String?
-  word_count      Int?
-  version         Int       @default(1)
+  file_name       String
+  file_type       String
+  file_size       Int
+  file_url        String
   status          String    @default("draft")
   feedback        String?
   reviewed_by     String?   @db.Uuid
   reviewed_at     DateTime?
-  created_at      DateTime  @default(now())
+  uploaded_at     DateTime  @default(now())
   updated_at      DateTime  @updatedAt
   
   student         users     @relation("student_essays", fields: [student_id], references: [id], onDelete: Cascade)
   application     applications? @relation(fields: [application_id], references: [id], onDelete: SetNull)
   reviewer        users?    @relation("reviewer_essays", fields: [reviewed_by], references: [id])
-  versions        essay_versions[]
 
   @@index([student_id], map: "idx_essays_student")
   @@map("essays")
-}
-
-model essay_versions {
-  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  essay_id        String    @db.Uuid
-  version_number  Int
-  content         String
-  word_count      Int?
-  created_at      DateTime  @default(now())
-  
-  essay           essays    @relation(fields: [essay_id], references: [id], onDelete: Cascade)
-
-  @@index([essay_id], map: "idx_essay_versions_essay")
-  @@map("essay_versions")
 }
 
 model calendar_events {

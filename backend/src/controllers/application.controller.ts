@@ -102,7 +102,6 @@ export const getApplicationById = async (
                         id: true,
                         title: true,
                         status: true,
-                        word_count: true,
                     },
                 },
             },

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth';
 import { validate } from '../middleware/validation';
+import { uploadSingle } from '../middleware/upload';
 import {
     getEssays,
     getEssayById,

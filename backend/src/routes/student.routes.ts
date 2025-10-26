@@ -8,6 +8,7 @@ import {
     deleteStudent,
     getStudentApplications,
     getStudentDocuments,
+    getStudentDashboard,
 } from '../controllers/student.controller';
 import {
     updateStudentProfileSchema,
@@ -38,5 +39,11 @@ router.get('/:id/applications', authenticate, getStudentApplications);
 
 // Get student documents
 router.get('/:id/documents', authenticate, getStudentDocuments);
+
+// Get current student's dashboard (authenticated student)
+router.get('/me/dashboard', authenticate, getStudentDashboard);
+
+// Get student dashboard by student id (admin/counselor or direct lookup)
+router.get('/:id/dashboard', authenticate, getStudentDashboard);
 
 export default router;
